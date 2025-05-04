@@ -2,11 +2,20 @@
 import React from 'react';
 import Filters from '@/components/Filters';
 import RoadsList from '@/components/RoadsList';
+import ScrollVelocity from '@/components/ScrollVelocity';
+import '../components/ScrollVelocity.css';
 
 const RoadsPage = () => {
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Road Registry</h1>
+      <div className="velocity-container">
+        <ScrollVelocity
+          texts={["Road Registry"]}
+          velocity={50}
+          className="scroll-text-item"
+          numCopies={6}
+        />
+      </div>
       
       <Filters />
       <RoadsList />
