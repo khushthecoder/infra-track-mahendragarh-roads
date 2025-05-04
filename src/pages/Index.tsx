@@ -1,12 +1,20 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import DashboardCards from '@/components/DashboardCards';
+import DashboardChart from '@/components/DashboardChart';
+import Filters from '@/components/Filters';
+import RoadsList from '@/components/RoadsList';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div>
+      <h1 className="text-2xl font-bold mb-6">Road Infrastructure Monitoring Dashboard</h1>
+      
+      <DashboardCards />
+      <DashboardChart />
+      
+      <Filters />
+      <RoadsList />
     </div>
   );
 };
