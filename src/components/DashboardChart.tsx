@@ -1,7 +1,7 @@
-
 import React, { useMemo } from 'react';
 import { useRoadContext } from '../contexts/RoadContext';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import CountUp from './CountUp';
 
 const DashboardChart: React.FC = () => {
   const { roads, infraWorks } = useRoadContext();
@@ -74,6 +74,29 @@ const DashboardChart: React.FC = () => {
     return Object.values(phases);
   }, [infraWorks]);
 
+  // Custom tooltip component with CountUp animation
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-white p-3 border border-gray-200 shadow-sm rounded">
+          <p className="font-medium">{`${label}`}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={`item-${index}`} style={{ color: entry.color }}>
+              {`${entry.name}: `}
+              <CountUp 
+                to={entry.value} 
+                duration={0.8} 
+                separator="," 
+                className="font-medium"
+              />
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       <div className="bg-white p-4 rounded-lg shadow-sm">
@@ -84,7 +107,7 @@ const DashboardChart: React.FC = () => {
             <XAxis dataKey="ward" />
             <YAxis yAxisId="left" />
             <YAxis yAxisId="right" orientation="right" />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar yAxisId="left" dataKey="roads" name="Roads" fill="#0053A5" />
             <Bar yAxisId="left" dataKey="infraWorks" name="Infra Works" fill="#00796B" />
@@ -101,7 +124,7 @@ const DashboardChart: React.FC = () => {
             <XAxis dataKey="phase" />
             <YAxis yAxisId="left" />
             <YAxis yAxisId="right" orientation="right" />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar yAxisId="left" dataKey="count" name="Number of Works" fill="#5E35B1" />
             <Bar yAxisId="right" dataKey="totalCost" name="Total Cost (₹)" fill="#00BCD4" />

@@ -2,6 +2,7 @@
 import React from 'react';
 import { useRoadContext } from '../contexts/RoadContext';
 import { MapPin, FileText, Users, TrendingUp } from 'lucide-react';
+import CountUp from './CountUp';
 
 const DashboardCards: React.FC = () => {
   const { roads, infraWorks } = useRoadContext();
@@ -35,6 +36,8 @@ const DashboardCards: React.FC = () => {
     {
       title: 'Total Cost',
       value: `₹${(totalCost / 10000000).toFixed(2)} Cr`,
+      valueRaw: totalCost / 10000000,
+      isCurrency: true,
       description: 'Combined budget',
       icon: <TrendingUp className="h-8 w-8 text-purple-500" />,
       color: 'border-purple-500'
@@ -58,7 +61,16 @@ const DashboardCards: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600">{card.title}</p>
-              <p className="text-2xl font-bold mt-1">{card.value}</p>
+              <p className="text-2xl font-bold mt-1">
+                {card.isCurrency ? (
+                  <>
+                    ₹<CountUp to={card.valueRaw} duration={1.5} separator="," />
+                    {" Cr"}
+                  </>
+                ) : (
+                  <CountUp to={card.value} duration={1.5} />
+                )}
+              </p>
               <p className="text-xs text-gray-500 mt-1">{card.description}</p>
             </div>
             <div className="bg-gray-50 rounded-full p-3">
